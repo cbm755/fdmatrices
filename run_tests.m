@@ -3,10 +3,10 @@ files = dir('.');
 totaltime = cputime();
 num_tests = 0;
 num_failed = 0;
-for i=1:length(tests)
+for i=1:length(files)
   fname = files(i).name;
   % tests should be files that start with 'test_'
-  if ( (~files(i).isdir) && strncmp(file, 'test_', 5) )
+  if ( (~files(i).isdir) && strncmp(fname, 'test_', 5) )
     testtime = cputime();
     f = str2func(fname(1:end-2));
     num_tests = num_tests + 1;
