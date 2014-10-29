@@ -11,7 +11,7 @@ function [Axb, Axf] = avg_matrices1d(N, BC)
 %   evaluations.
 
   if nargin < 3
-    BC = 'p'
+    BC = 'p';
   end
 
   switch BC
