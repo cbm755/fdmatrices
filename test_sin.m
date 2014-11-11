@@ -1,4 +1,6 @@
 function [pass] = test_sin(plots,verbose)
+% This test solves the problem for a solution u(x) = sin(x) in [0,pi]. So then the
+% result is u''(x) = -sin(x) = -u(x).
 if nargin == 0
     plots = false;
     verbose = false;
@@ -6,9 +8,6 @@ elseif nargin == 1
     verbose = false;
 end
 
-%% Do your MATLAB tests
-% This test solves the problem for a solution u(x) = sin(x) in [0,pi]. So then the
-% result is u''(x) = -sin(x) = -u(x).
 [Ix,D1xx,D1xc,D1xb,D1xf] = diff_matrices1d(100, pi/100, 'd');
 x = linspace(0,pi, 100);
 u = sin(x);
