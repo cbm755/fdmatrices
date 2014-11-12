@@ -1,4 +1,4 @@
-function [] = test_conv_study_sin(plots,verbose)
+function r = test_template(plots, verbose)
   if nargin == 0
     plots = 0;
     verbose = 0;
@@ -7,5 +7,5 @@ function [] = test_conv_study_sin(plots,verbose)
   end
 
   %% do your matlab tests...
-
+  r = true
 end
