@@ -1,0 +1,27 @@
+function test_unusual_input(N,dx)
+
+% This function is used to test whether the function diff_matrices1d will
+% create an output for D1xb, D1xc, D1xf, or D1xx when the inputs for 
+% N and dx don't fit the task.
+
+% It will return 1(TRUE) if diff_matrices1d:
+% - generates at least one of the 4 matrices even though at least one of the inputs is 'incorrect';
+% - generates the 4 matrices when the inputs are 'correct'.
+% will return 0(FALSE) if it doesn't create any of the 4 matrices when the 
+% inputs are 'correct'.
+
+% It turns out that when dx = nan, outputs is returned with enties NAN.
+% Otherwise it seems to work as expected.
+
+try                                   % used to run the entire script even though the function return an error
+[Ix,D1xx,D1xc,D1xb,D1xf] = diff_matrices1d(N,dx,'n');                % the last argument can be chosen between BC, 'n', or 'd'
+end 
+
+if (~(isinteger(N))) | (~(isnumeric(dx))) | (dx == Inf) | (isnan(dx))           % 'incorrect' inputs 
+   (exist('D1xb') == 0)&(exist('D1xc') == 0)&(exist('D1xf') == 0)&(exist('D1xx') == 0)
+else
+   (exist('D1xb') == 1)&(exist('D1xc') == 1)&(exist('D1xf') == 1)&(exist('D1xx') == 1)
+end
+end
+
+    
