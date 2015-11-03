@@ -13,6 +13,13 @@ function test_unusual_input(N,dx)
 % It turns out that when dx = nan, outputs is returned with enties NAN.
 % Otherwise it seems to work as expected.
 
+if nargin == 0
+    N = false;
+    dx = false;
+elseif nargin == 1
+    dx = false;
+end
+
 try                                   % used to run the entire script even though the function return an error
 [Ix,D1xx,D1xc,D1xb,D1xf] = diff_matrices1d(N,dx,'n');                % the last argument can be chosen between BC, 'n', or 'd'
 end 
