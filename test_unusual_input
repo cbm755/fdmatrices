@@ -24,11 +24,9 @@ try                                   % used to run the entire script even thoug
 [Ix,D1xx,D1xc,D1xb,D1xf] = diff_matrices1d(N,dx,'n');                % the last argument can be chosen between BC, 'n', or 'd'
 end 
 
-if (~(isinteger(N))) | (~(isnumeric(dx))) | (dx == Inf) | (isnan(dx))           % 'incorrect' inputs 
+if (~(rem(N,1)==0)) | (~(isnumeric(dx))) | (dx == Inf) | (isnan(dx))           % 'incorrect' inputs 
    (exist('D1xb') == 0)&(exist('D1xc') == 0)&(exist('D1xf') == 0)&(exist('D1xx') == 0)
 else
    (exist('D1xb') == 1)&(exist('D1xc') == 1)&(exist('D1xf') == 1)&(exist('D1xx') == 1)
 end
 end
-
-    
