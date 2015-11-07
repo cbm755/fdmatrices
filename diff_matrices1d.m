@@ -15,7 +15,7 @@ function [Ix,D1xx,D1xc,D1xb,D1xf] = diff_matrices1d(N, dx, BC)
 %   evaluations.
 
   if nargin < 3
-    BC = 'p'
+    BC = 'p';
   end
 
   switch BC
