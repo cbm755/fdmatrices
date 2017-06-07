@@ -2,8 +2,8 @@
 % Method-of-lines version
 
 % Grid and initial data:
-hx = 1/10;
-hy = 1/8;
+hx = 1/14;
+hy = 1/12;
 x1d = 0:hx:(1-hx);
 y1d = 0:hy:(1-hy);
 %x1d = linspace(0, 1, 21);
@@ -44,16 +44,19 @@ u = u0(:);
 for n = 1:numsteps
   unew = u + k*(Dxx*u + Dyy*u);
   u = unew;
-  if (mod(n, 100) == 0)
+  if (n == 1 || n == numsteps || mod(n, 25) == 0)
     uplot = reshape(u, length(y1d), length(x1d));
-    set(plt, 'zdata', uplot);
-    set(plt, 'cdata', uplot);
+    %set(plt, 'zdata', uplot);
+    %set(plt, 'cdata', uplot);
+    figure(1); clf; surf(x, y, u0);
+    xlabel('x'); ylabel('y');
+    zlabel('u(t,x,y)');
     t = n * k;
-    title(['t = ' num2str(t)])
+    title(['n = ' num2str(n) ', t = ' num2str(t)])
     % (check!)
     err = uplot - uexact(t, x, y);
 
-    norm(err(:), inf)
+    disp(sprintf('n=%d, err=%g', n, norm(err(:), inf)))
 
     figure(2); clf;
     subplot(1,3,1);
