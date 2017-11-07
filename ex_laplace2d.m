@@ -1,5 +1,9 @@
 %% 2D Laplacian example with non-homogeneous boundary conditions
-% $ -Laplacian u = f$, subject to $u = g$
+% The general problem is:
+%   $$ -nabla^2 u = f$$
+% subject to a boundary condition $u = g$.
+%
+% In this demo $f = (y - 1/2)^3 \cos(x)$.
 
 N = 32
 hx = 1/N;
@@ -29,6 +33,21 @@ b4 = (y == y1d(end));
 
 %% Boundary condition vector for non-homogenous part
 % TODO: these 2/h^2 factors are a bit obnoxious
+% Why do they have this form?  Consider in 1D, the "ghost point"
+% $x_G$ where $G = x_{-1}$, the first grid point outside the
+% grid (hence ghost).  We get a value for u at $x_G$ using
+% extrapolation:
+% $$u_G = g(x_G) + (g(x_G) - u(x_1)) = 2g(x_G) - u(x_1)$$
+% Then applying the finite difference stencil for $-u_{xx}$
+% at $x_0$ we get:
+% $$\begin{align*}
+%     (-u_G + 2u_0 - u_1)/h^2
+%       &= (-[2g(x_G) - u_1] + 2u_0 - u_1)/h^2  \\
+%       &= (-2g(x_G) + 2u_0 + u_1 - u_1)/h^2  \\
+%       &= (2u_0 - 2g(x_G))/h^2.
+% \end{align*}$$
+% We move the $2/h^2*g$ to the RHS.
+
 bc_rhs = zeros(size(x));
 bc_rhs(b1) = bc_rhs(b1) + 2/hx^2*g(x(b1), y(b1));
 bc_rhs(b2) = bc_rhs(b2) + 2/hx^2*g(x(b2), y(b2));
