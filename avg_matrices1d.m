@@ -10,7 +10,7 @@ function [Axb, Axf] = avg_matrices1d(N, BC)
 %   differences is the one that's consistent with half-point
 %   evaluations.
 
-  if nargin < 3
+  if nargin < 2
     BC = 'p';
   end
 
