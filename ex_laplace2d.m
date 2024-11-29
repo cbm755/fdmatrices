@@ -1,9 +1,9 @@
-%% 2D Laplacian example with non-homogeneous boundary conditions
+%% 2D Laplacian example with non-homogeneous Dirichlet boundary conditions
 % The general problem is:
 %   $$ -nabla^2 u = f$$
 % subject to a boundary condition $u = g$.
 %
-% In this demo $f = (y - 1/2)^3 \cos(x)$.
+% In this demo $u = (y - 1/2)^3 \cos(x)$.
 
 N = 32
 hx = 1/N;
@@ -16,7 +16,7 @@ x = xx(:);
 y = yy(:);
 
 %% "method of manufactured solutions"
-% Choose $u(x,y)$ then sub into PDE to find $f$
+% Choose $u(x, y)$ then sub into PDE to find $f$.
 uexact_fcn = @(x, y) (y - 1/2).^3 .* cos(x);
 f_fcn = @(x, y) (y-1/2).^3.*cos(x) - 3*(2*y-1).*cos(x);
 g = uexact_fcn;
