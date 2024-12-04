@@ -1,0 +1,56 @@
+function [pass] = test_sin_D1xc(plots,verbose)
+% This test solves the problem with central discretization
+%for a solution u(x) = cos(x) in [-pi/2,pi/2]. So then the
+% result is u'(x) = -sin(x).
+if nargin == 0
+    plots = false;
+    verbose = false;
+elseif nargin == 1
+    verbose = false;
+end
+
+[Ix,D1xx,D1xc,D1xb,D1xf] = diff_matrices1d(100, pi/100, 'd');
+x = linspace(-pi/2,pi/2, 100);
+u = cos(x);
+ux = -sin(x);
+unum = D1xc*u';
+unum = unum';
+
+if plots
+    subplot(1,2,1)
+    plot(x,ux,'r')
+    hold on
+    plot(x,unum)
+    xlim([-pi/2 pi/2]);
+    hold off
+    title('Numerical vs analytical solutions')
+    
+    subplot(1,2,2)
+    plot(x,abs(ux-unum))
+    xlim([-pi/2 pi/2]);
+    title('Absolute error')
+end
+
+err1 = max(abs(ux-unum));
+%finer mesh
+[Ix,D1xx,D1xc,D1xb,D1xf] = diff_matrices1d(200, pi/200, 'd');
+x = linspace(-pi/2,pi/2, 200);
+u = cos(x);
+ux = -sin(x);
+unum = D1xc*u';
+unum = unum';
+err2 = max(abs(ux-unum));
+
+
+if abs(log(err2/err1)/log(1/2)-1) > 0.1
+    pass = false;
+    if verbose
+        sprintf('Matrix D1xc Test not passed: the error reduces at ratio %.4g for h goes down by 2',err1/err2)
+    end
+else
+    pass = true;
+    if verbose
+        sprintf('Matrix D1xc Test passed succesfully: the error reduces at ratio %.4g for h goes down by 2',err1/err2)
+    end
+end
+end
