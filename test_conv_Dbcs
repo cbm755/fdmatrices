@@ -1,0 +1,62 @@
+function [pass] = test_sin(plots,verbose)
+% This test the convergence of the problem for a solution u(x) = sin(x) in [0,pi]
+% So then the result is u'(x) = cos(x) and check the error decrease about 2
+% when h diveded by 2
+if nargin == 0
+    plots = false;
+    verbose = false;
+elseif nargin == 1
+    verbose = false;
+end
+
+[Ix1,D1xx1,D1xc1,D1xb1,D1xf1] = diff_matrices1d(101, pi/100, 'd');
+x = linspace(0,pi, 101);
+u = sin(x);
+uxt1 = cos(x);
+ux1 = D1xf1*u';
+ux1 = ux1';
+
+[Ix2,D1xx2,D1xc2,D1xb2,D1xf2] = diff_matrices1d(201, pi/200, 'd');
+t = linspace(0,pi, 201);
+u = sin(t);
+uxt2=cos(t)
+ux2 = D1xf2*u';
+ux2 =ux2';
+
+if plots
+    subplot(1,2,1)
+    plot(x,uxt1,'r')
+    hold on
+    plot(x,ux1,'k')
+    hold on
+    plot(t,ux2)
+    xlim([0 pi]);
+    hold off
+    title('Numerical and analytical solutions')
+    
+    subplot(1,2,2)
+    plot(x,abs(ux1-uxt1))
+    hold on
+    plot(t,abs(ux2-uxt2))
+    xlim([0 pi]);
+    title('Two distinctive absolute error when use different steps')
+end
+
+ratio=abs((ux1(1)-uxt1(1))/(ux2(1)-uxt2(1)));
+for i=2:101
+    ratio=ratio+abs((ux1(i)-uxt1(i))/(ux2(2*i-1)-uxt2(2*i-1)));
+end
+ratio=ratio/101;
+
+if ratio>3
+    pass = false;
+    if verbose
+        sprintf('Test not passed: the errratio was %.4g',ratio)
+    end
+else
+    pass = true;
+    if verbose
+        sprintf('Test passed succesfully: the errratio was %.4g',ratio)
+    end
+end
+end
